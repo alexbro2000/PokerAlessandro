@@ -2,5 +2,72 @@ public class Main {
     public static void main(String[] args) {
         System.out.println("Hello, world!");
     }
+    static {
+        try {
+            Class<?> cardClass = Class.forName("Card");
+            java.lang.reflect.Constructor<?> ctorCard = null;
+            Object card = null;
+            try {
+                ctorCard = cardClass.getConstructor(String.class, String.class);
+                card = ctorCard.newInstance("Ace", "Spades");
+            } catch (NoSuchMethodException e1) {
+                try {
+                    ctorCard = cardClass.getConstructor(String.class);
+                    card = ctorCard.newInstance("Ace of Spades");
+                } catch (NoSuchMethodException e2) {
+                    try {
+                        ctorCard = cardClass.getConstructor(int.class, int.class);
+                        card = ctorCard.newInstance(14, 4);
+                    } catch (NoSuchMethodException e3) {
+                        ctorCard = cardClass.getDeclaredConstructor();
+                        ctorCard.setAccessible(true);
+                        card = ctorCard.newInstance();
+                    }
+                }
+            }
 
+            Class<?> deckClass = Class.forName("Deck");
+            java.lang.reflect.Constructor<?> ctorDeck;
+            Object deck;
+            try {
+                ctorDeck = deckClass.getConstructor();
+            } catch (NoSuchMethodException e) {
+                ctorDeck = deckClass.getDeclaredConstructor();
+                ctorDeck.setAccessible(true);
+            }
+            deck = ctorDeck.newInstance();
+
+            System.out.println("Created card: " + card);
+            System.out.println("Created deck: " + deck);
+
+            try {
+                java.lang.reflect.Method shuffle = deckClass.getMethod("shuffle");
+                shuffle.invoke(deck);
+                System.out.println("Shuffled deck");
+            } catch (NoSuchMethodException ignored) {}
+
+            try {
+                java.lang.reflect.Method add = deckClass.getMethod("add", cardClass);
+                add.invoke(deck, card);
+                System.out.println("Added card to deck");
+            } catch (NoSuchMethodException ignored) {}
+
+            try {
+                java.lang.reflect.Method draw = deckClass.getMethod("draw");
+                Object drawn = draw.invoke(deck);
+                System.out.println("Drew: " + drawn);
+            } catch (NoSuchMethodException ignored) {}
+
+            try {
+                java.lang.reflect.Method size = deckClass.getMethod("size");
+                Object s = size.invoke(deck);
+                System.out.println("Deck size: " + s);
+            } catch (NoSuchMethodException ignored) {}
+
+        } catch (ClassNotFoundException e) {
+            System.out.println("Card or Deck class not found: " + e.getMessage());
+        } catch (Exception e) {
+            System.out.println("Error running deck/card demo: " + e);
+        }
+    }
 }
