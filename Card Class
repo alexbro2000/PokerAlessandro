@@ -1,19 +1,33 @@
 
 // Card.java
 public class Card {
-    private String suit;
+    private char suit;
     private int value;
 
-    public Card(String suit, int value) {
+    public Card(char suit, int value) {
         this.suit = suit;
         this.value = value;
     }
+ public void setsuit(char suit){
+    this.suit = suit;
+  }
 
-    public String getSuit() { return suit; }
+  public char getsuit(){
+    return suit;
+  }
+
+public void setvalue(int value){
+    this.value = number;
+  }
+
+  public int getvalue(){
+    return this.value;
+  }
+    public char getSuit() { return suit; }
     public int getValue() { return value; }
 
     @Override
-    public String toString() {
+    public void displayCard() {
         return value + " of " + suit;
     }
 }
