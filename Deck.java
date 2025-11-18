@@ -42,5 +42,9 @@ private Card card1;
     public Deck() {
         this.card1 = getRandomCard();
     }
+
+    public Card getCard() {
+        return this.card1;
+    }
 }
 

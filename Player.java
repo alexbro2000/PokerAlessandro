@@ -27,21 +27,16 @@ public class Player{
     }
 
     public void takeMoney(int amount) {
-        this.money -= amount;
-    }
-
-    public void giveMoney(int amount) {
         this.money += amount;
     }
 
-    public void getCard() {
-        char x = 'S';
-        int y = 10;
-        int value = y;
-        char suit = x;
-
-        System.out.println("New card: " + value + " of " + suit);
+    public void giveMoney(int amount) {
+        this.money -= amount;
     }
+
+    public void getCard() {
+        Deck deck = new Deck();
+        deck.getCard();
    
     
 
