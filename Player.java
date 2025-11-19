@@ -1,5 +1,5 @@
 public class Player{
- public static void Player(String[] args) { 
+ public static void Player(String[] args) { }
     private int money;
     private String name;
 
@@ -40,4 +40,6 @@ public class Player{
    
     
 
+    }
 }
+ 
